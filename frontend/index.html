@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jewelers Mutual – Jewelry Insurance Quote</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="container">
+      <h1 class="logo">Jewelers Mutual Clone</h1>
+      <nav>
+        <a href="#quote" class="btn">Get a Quote</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h2>Protect what matters most</h2>
+      <p>Our jewellery insurance coverage keeps your valuables safe from loss, theft and damage.  Get a quick quote in seconds.</p>
+      <a href="#quote" class="btn primary">Start your quote</a>
+    </div>
+  </section>
+
+  <section id="quote" class="quote-section">
+    <div class="container">
+      <h2>Get Your Jewelry Insurance Quote</h2>
+      <form id="quoteForm" class="quote-form">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="value">Jewellery Value (USD)</label>
+        <input type="number" id="value" name="value" min="0" step="0.01" required />
+
+        <button type="submit" class="btn primary">Calculate Premium</button>
+      </form>
+
+      <div id="result" class="result" style="display: none;">
+        <p>Your estimated annual premium is <strong id="premium"></strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Jewelers Mutual Clone.  This is a demonstration site and not affiliated with Jewelers Mutual Insurance Company.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Replace this URL after deploying the API (terraform outputs it)
+    const API_ENDPOINT = "REPLACE_WITH_API_ENDPOINT";
+
+    const form = document.getElementById("quoteForm");
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const value = parseFloat(document.getElementById("value").value);
+
+      const payload = { name, email, value };
+
+      try {
+        const response = await fetch(API_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        if (!response.ok) {
+          throw new Error(`Server returned ${response.status}`);
+        }
+        const data = await response.json();
+        // display premium
+        const premiumElement = document.getElementById("premium");
+        premiumElement.textContent = `$${data.quote.toFixed(2)}`;
+        document.getElementById("result").style.display = "block";
+      } catch (error) {
+        alert("An error occurred while retrieving your quote. Please try again later.");
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # Install datadog-lambda for instrumentation (optional)
+          pip install datadog-lambda==2.* || true
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: '1.5.0'
+
+      - name: Terraform init
+        working-directory: ./terraform
+        run: terraform init
+
+      - name: Terraform fmt
+        working-directory: ./terraform
+        run: terraform fmt -check
+
+      - name: Terraform validate
+        working-directory: ./terraform
+        run: terraform validate
+
+      - name: Terraform plan
+        working-directory: ./terraform
+        run: terraform plan -input=false
+        env:
+          AWS_REGION: us-east-1
+          # AWS credentials should be configured via secrets or the GitHub hosted runner's IAM role
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+
+      # Optionally apply the Terraform plan on main branch.  You can remove this
+      # step or restrict it behind an approval job for production use.
+      - name: Terraform apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        working-directory: ./terraform
+        run: terraform apply -auto-approve -input=false
+        env:
+          AWS_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}

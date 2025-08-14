@@ -1,0 +1,141 @@
+/* Basic styles for the Jewelers Mutual clone website */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Navigation bar */
+.navbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e2e2;
+  padding: 10px 0;
+}
+
+.navbar .logo {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2a2a2a;
+}
+
+.navbar nav {
+  float: right;
+  margin-top: 5px;
+}
+
+.navbar nav a {
+  margin-left: 15px;
+  text-decoration: none;
+  color: #0066cc;
+  font-weight: bold;
+}
+
+/* Hero section */
+.hero {
+  background: linear-gradient(135deg, #0055a5 0%, #007ec6 100%);
+  color: #fff;
+  padding: 80px 0;
+  text-align: center;
+}
+
+.hero h2 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background-color: #ffb700;
+  color: #222;
+  transition: background-color 0.2s ease;
+}
+
+.btn.primary:hover {
+  background-color: #ff9900;
+}
+
+/* Quote section */
+.quote-section {
+  padding: 60px 0;
+  background-color: #ffffff;
+}
+
+.quote-section h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+
+.quote-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.quote-form label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.quote-form input {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.result {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1.3rem;
+  color: #0066cc;
+}
+
+/* Footer */
+.footer {
+  background-color: #f2f2f2;
+  padding: 20px 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .navbar nav {
+    float: none;
+    text-align: center;
+    margin-top: 10px;
+  }
+  .hero h2 {
+    font-size: 2rem;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
+}
