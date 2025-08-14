@@ -86,3 +86,4 @@ The included `.github/workflows/ci.yml` file defines a simple CI/CD pipeline tha
 * **Secure the API.**  Add authentication (e.g. AWS Cognito or API keys) to the API Gateway.
 * **Add downstream processing.**  Subscribe additional Lambdas or services to the SNS topic and SQS queue to handle quotes asynchronously (e.g. send confirmation emails, persist to a database).
 * **Attach your Datadog account.**  Provide your API key and set up the Datadog forwarder layer so that metrics, logs, and traces flow into Datadog.
+# Jewelers
