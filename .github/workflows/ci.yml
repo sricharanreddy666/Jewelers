@@ -51,7 +51,7 @@ jobs:
         run: terraform plan -input=false
         env:
           AWS_REGION: us-east-1
-          # AWS credentials should be configured via secrets or the GitHub hosted runner's IAM role
+          # AWS credentials should be configured via secrets or the GitHub hosted runner's IAM role.
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
