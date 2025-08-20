@@ -54,10 +54,8 @@ jobs:
           # AWS credentials should be configured via secrets or the GitHub hosted runner's IAM role
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
 
-      # Optionally apply the Terraform plan on main branch.  You can remove this
-      # step or restrict it behind an approval job for production use.
+      # Optionally apply the Terraform plan on main branch.
       - name: Terraform apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         working-directory: ./terraform
@@ -66,4 +64,3 @@ jobs:
           AWS_REGION: us-east-1
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
